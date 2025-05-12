@@ -5,4 +5,6 @@ export default defineConfig({
   themeConfig: {
     name: 'fr-generator',
   },
+  publicPath: '/xrender-schema-builder/',
+  base: '/xrender-schema-builder/'
 });
