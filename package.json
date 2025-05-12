@@ -56,7 +56,7 @@
   "dependencies": {
     "clone": "^2.1.2",
     "copy-text-to-clipboard": "^2.2.0",
-    "form-render": "^1.0.0",
+    "form-render": "^2.5.2",
     "i18next": "^21.8.11",
     "moment": "^2.27.0",
     "nanoid": "^3.1.22",
@@ -73,6 +73,7 @@
     "@types/react": "^18.0.0",
     "@types/react-dom": "^18.0.0",
     "@umijs/lint": "^4.0.0",
+    "antd": "^5.25.1",
     "dumi": "^2.4.13",
     "eslint": "^8.23.0",
     "father": "^4.1.0",
