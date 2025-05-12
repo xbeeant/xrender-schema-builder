@@ -142,8 +142,8 @@ function Provider(props, ref) {
     toSetting,
     ..._transformer,
   };
-
-  const frwRef = ref || useRef();
+  const defaultRef = useRef();
+  const frwRef = ref || defaultRef;
   const [state, setState] = useSet({
     formData: {},
     frProps: {}, // form-render 的全局 props 等

@@ -56,18 +56,18 @@ export default function Settings({ widgets }) {
   return showRight ? (
     <div className="right-layout relative pl2">
       <ToggleIcon />
-      <Tabs activeKey={tabsKey} onChange={key => setState({ tabsKey: key })}>
-        {showItemSettings && (
-          <TabPane tab={t("组件配置")} key="itemSettings">
-            <ItemSettings widgets={widgets} />
-          </TabPane>
-        )}
-        {!globalSettingHide && (
-          <TabPane tab="表单配置" key="globalSettings">
-            <GlobalSettings widgets={widgets} />
-          </TabPane>
-        )}
-      </Tabs>
+      <Tabs items={[
+        {
+          key: 'itemSettings',
+          label: t("组件配置"),
+          children: showItemSettings && <ItemSettings widgets={widgets} />
+        },
+        !globalSettingHide && {
+          key: 'globalSettings',
+          label: t("表单配置"),
+          children: <GlobalSettings widgets={widgets} />
+        },
+      ]} activeKey={tabsKey} onChange={key => setState({ tabsKey: key })} />
     </div>
   ) : (
     <HideRightArrow />

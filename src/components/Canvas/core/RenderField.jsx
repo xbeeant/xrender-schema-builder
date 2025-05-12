@@ -40,7 +40,7 @@ const RenderField = ({
     const defaultSchema = { ...schema };
     delete defaultSchema['widget'];
     widgetName = getWidgetName(defaultSchema, mapping);
-    Widget = widgets[widgetName] || 'input';
+    Widget = widgets[widgetName] || 'div';
   }
   // 真正有效的label宽度需要从现在所在item开始一直往上回溯（设计成了继承关系），找到的第一个有值的 labelWidth
   const effectiveLabelWidth =
