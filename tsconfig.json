@@ -8,8 +8,8 @@
     "baseUrl": "./",
     "paths": {
       "@@/*": [".dumi/tmp/*"],
-      "fr-generator": ["src"],
-      "fr-generator/*": ["src/*", "*"]
+      "@xbeeant/fr-generator": ["src"],
+      "@xbeeant/fr-generator/*": ["src/*", "*"]
     }
   },
   "include": [".dumirc.ts", "src/**/*"]

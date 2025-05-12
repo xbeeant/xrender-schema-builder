@@ -3,7 +3,7 @@
 ### 安装
 
 ```bash
-npm i fr-generator
+npm i @xbeeant/fr-generator
 ```
 
 ### 代码演示
@@ -14,7 +14,7 @@ npm i fr-generator
  * defaultShowCode: true
  */
 import React from 'react';
-import Generator from 'fr-generator';
+import Generator from '@xbeeant/fr-generator';
 
 const defaultValue = {
   type: 'object',
