@@ -1,0 +1,31 @@
+name: Deploy Dumi to GitHub Pages
+
+on:
+  push:
+    branches:
+      - main  # 根据需要替换为你的默认分支名
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: '18'  # 指定你的项目所需的Node版本
+
+    - name: Install dependencies
+      run: yarn install
+
+    - name: Build project with dumi
+      run: yarn run docs:build
+
+    - name: Deploy to GitHub Pages
+      uses: peaceiris/actions-gh-pages@v3
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: ./docs-dist  # 确保此路径与dumi的输出目录匹配
