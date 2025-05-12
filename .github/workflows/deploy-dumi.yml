@@ -4,7 +4,10 @@ on:
   push:
     branches:
       - main  # 根据需要替换为你的默认分支名
-
+permissions:
+  contents: write
+  id-token: write
+  
 jobs:
   deploy:
     runs-on: ubuntu-latest
