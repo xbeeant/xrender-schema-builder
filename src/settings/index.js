@@ -36,6 +36,10 @@ export const defaultCommonSettings = {
     type: 'string',
     widget: 'htmlInput',
   },
+  type: {
+    title: '数据类型',
+    type: 'string',
+  },
   displayType: {
     title: '标题展示模式',
     type: 'string',
@@ -540,6 +544,7 @@ export const advancedElements = [
       title: '图片展示',
       type: 'string',
       format: 'image',
+      widget: 'imageInput',
     },
     setting: {},
   },
@@ -758,6 +763,7 @@ export const layouts = [
     schema: {
       title: '数组',
       type: 'array',
+      widget: 'cardList',
       items: {
         type: 'object',
         properties: {},
@@ -857,11 +863,11 @@ export const layouts = [
   },
   {
     text: '表格列表',
-    name: 'list2',
+    name: 'tableList',
     schema: {
       title: '数组',
       type: 'array',
-      widget: 'list2',
+      widget: 'tableList',
       items: {
         type: 'object',
         properties: {},
@@ -993,6 +999,7 @@ const saves = [
           title: '对象数组',
           description: '对象数组嵌套功能',
           type: 'array',
+          widget: 'simpleList',
           items: {
             type: 'object',
             properties: {

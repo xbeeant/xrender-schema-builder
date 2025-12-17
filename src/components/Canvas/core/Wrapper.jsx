@@ -69,13 +69,17 @@ function Wrapper({ $id, item, inside = false, children, style }) {
       if (didHover) {
         // Determine rectangle on screen
         const hoverBoundingRect =
-          boxRef.current && boxRef.current.getBoundingClientRect();
+          boxRef.current && boxRef.current?.getBoundingClientRect();
+        if (!hoverBoundingRect) return;
+
         // Get vertical middle
         const hoverMiddleY =
           (hoverBoundingRect.bottom - hoverBoundingRect.top) / 2;
         // Determine mouse position
         // const clientOffset = monitor.getClientOffset();
         const dragOffset = monitor.getSourceClientOffset();
+        if (!dragOffset) return;
+
         // Get pixels to the top
         const hoverClientY = dragOffset.y - hoverBoundingRect.top;
         // Only perform the move when the mouse has crossed half of the items height

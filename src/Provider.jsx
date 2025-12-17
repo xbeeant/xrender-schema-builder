@@ -174,7 +174,7 @@ function Provider(props, ref) {
     setState({ schema: newSchema });
     if (props.onSchemaChange) {
       setTimeout(() => {
-        if (!frwRef.current) return;
+        if (typeof frwRef === 'function' || !frwRef.current) return;
         const pureSchema = frwRef.current.getValue();
         props.onSchemaChange(pureSchema);
       }, 0);

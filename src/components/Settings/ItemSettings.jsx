@@ -13,6 +13,14 @@ import { useGlobal, useStore } from '../../utils/hooks';
 import { getWidgetName } from '../../utils/mapping';
 import * as frgWidgets from '../../widgets';
 
+/**
+ * ItemSettings 组件用于渲染当前选中表单项的配置面板。
+ * 它根据选中项的 schema 和全局 widgets 配置，动态生成对应的设置表单。
+ *
+ * @param {Object} props - 组件属性
+ * @param {Object} [props.widgets] - 外部传入的自定义 widgets，会与全局 widgets 合并使用
+ * @returns {JSX.Element} 渲染出的设置表单界面
+ */
 export default function ItemSettings({ widgets }) {
   const setGlobal = useGlobal();
   const form = useForm();
@@ -31,11 +39,20 @@ export default function ItemSettings({ widgets }) {
     userProps;
   const [settingSchema, setSettingSchema] = useState({});
 
+  // 合并全局 widgets 和内部 widgets
   const _widgets = {
     ...globalWidgets,
     ...frgWidgets,
   };
 
+  /**
+   * 根据 settings 和 commonSettings 构造 widget 列表
+   * 每个 widget 包含其 schema、widget 名称和 setting 配置
+   *
+   * @param {Array} settings - 用户传入的设置项数组
+   * @param {Object} commonSettings - 公共设置项
+   * @returns {Array} 处理后的 widget 列表
+   */
   const getWidgetList = (settings, commonSettings) => {
     return settings.reduce((widgetList, setting) => {
       if (!Array.isArray(setting.widgets)) return widgetList;
@@ -65,6 +82,11 @@ export default function ItemSettings({ widgets }) {
     }, []);
   };
 
+  /**
+   * 当设置表单数据变化时，将数据转换为 schema 并通知外部更新
+   *
+   * @param {Object} value - 表单当前值
+   */
   const onDataChange = (value = {}) => {
     try {
       if (selected === '#' || !isReady.current || !value.$id) return;
@@ -78,6 +100,7 @@ export default function ItemSettings({ widgets }) {
     }
   };
 
+  // 当选中项变化时，重新计算并设置 settingSchema
   useEffect(() => {
     // setting 该显示什么的计算，要把选中组件的 schema 和它对应的 widgets 的整体 schema 进行拼接
     try {
@@ -109,7 +132,7 @@ export default function ItemSettings({ widgets }) {
         });
         const value = transformer.toSetting(item.schema);
         form.setValues(value);
-        onDataChange(form.getValues());
+        onDataChange(form.getValues(true));
         validation && form.submit();
         isReady.current = true;
       }, 0);
@@ -119,21 +142,24 @@ export default function ItemSettings({ widgets }) {
     }
   }, [selected]);
 
+  // 监听表单校验状态变化，通知外部错误信息更新
   useEffect(() => {
-    validation && onItemErrorChange(form?.errorFields);
-  }, [validation, form?.errorFields]);
+    validation && onItemErrorChange(form?.getFieldsError());
+  }, [validation, form?.getFieldsError()]);
 
+  // 将当前 form 实例存入全局状态，供外部使用
   useEffect(() => {
     setGlobal({ settingsForm: form });
   }, []);
 
   return (
-    <div style={{ paddingRight: 24 }}>
+    <div style={{ paddingRight: 10 }}>
       <FormRender
         form={form}
         schema={settingSchema}
         widgets={{ ..._widgets, ...widgets }}
         mapping={globalMapping}
+        removeHiddenData={false}
         watch={{
           '#': v => setTimeout(() => onDataChange(v), 0),
         }}

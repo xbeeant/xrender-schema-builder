@@ -35,7 +35,7 @@ const PreviewFR = ({ schema, data }) => {
 const FR = ({ id = '#', preview, displaySchema }) => {
   const { flatten, frProps = {} } = useStore();
   const { t } = useTranslation();
-  if (preview) {
+  if (preview && displaySchema) {
     const data = flattenToData(flatten);
     return <PreviewFR schema={displaySchema} data={data} />;
   }

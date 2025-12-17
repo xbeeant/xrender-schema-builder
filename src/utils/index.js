@@ -331,6 +331,7 @@ export const addItem = ({
       newFlatten[newId] = newItem;
     } catch (error) {
       console.error(error, 'catch');
+      newId = '`#/';
     }
     return { newId, newFlatten };
   }
@@ -416,7 +417,7 @@ export const dropItem = ({ dragId, dragItem, dropId, position, flatten }) => {
     console.error(error);
   }
 
-  _dragItem.parent = dropParent.$id;
+  _dragItem.parent = dropParent.schema.$id;
   return [newFlatten, newId];
 };
 
@@ -425,14 +426,17 @@ export const dataToFlatten = (flatten, data) => {
   if (!flatten || !data) return {};
   Object.entries(flatten).forEach(([id, item]) => {
     const branchData = getDataById(data, id);
-    flatten[id].data = branchData;
+    item.data = branchData;
   });
   return flatten;
 };
 
 export const flattenToData = (flatten, id = '#') => {
   try {
-    let result = flatten[id].data;
+    const rootItem = flatten[id];
+    if (!rootItem) return undefined;
+
+    let result = rootItem.data;
     const ids = Object.keys(flatten);
     const childrenIds = ids.filter(item => {
       const lengthOfId = id.split('/').length;
@@ -508,9 +512,17 @@ export function getChildren2(schema) {
   }
   let schemaSubs = {};
   if (type === 'object') {
+    if (!properties) {
+
+      return [];
+    }
     schemaSubs = properties;
   }
   if (type === 'array') {
+    if (!items || !items.properties) {
+
+      return [];
+    }
     schemaSubs = items.properties;
   }
   return Object.keys(schemaSubs).map(name => ({

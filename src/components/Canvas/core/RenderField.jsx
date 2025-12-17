@@ -32,7 +32,12 @@ const RenderField = ({
   let widgetName = getWidgetName(schema, mapping);
   const customWidget = schema['widget'];
   if (customWidget && widgets[customWidget]) {
-    widgetName = customWidget;
+    // 处理list widget
+    if (['cardList','simpleList','tableList','tabList','drawerList','virtualList'].includes(customWidget)){
+      widgetName = 'list'
+    } else {
+      widgetName = customWidget;
+    }
   }
   let Widget = widgets[widgetName];
   // 如果不存在，比如有外部的自定义组件名称，使用默认展示组件

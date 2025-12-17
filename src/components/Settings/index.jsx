@@ -57,11 +57,11 @@ export default function Settings({ widgets }) {
     <div className="right-layout relative pl2">
       <ToggleIcon />
       <Tabs items={[
-        {
+        showItemSettings ? {
           key: 'itemSettings',
           label: t("组件配置"),
-          children: showItemSettings && <ItemSettings widgets={widgets} />
-        },
+          children: <ItemSettings widgets={widgets} />
+        } : {},
         !globalSettingHide && {
           key: 'globalSettings',
           label: t("表单配置"),
