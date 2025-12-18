@@ -19,7 +19,7 @@ jobs:
     - name: Setup Node.js
       uses: actions/setup-node@v2
       with:
-        node-version: '18'  # 指定你的项目所需的Node版本
+        node-version: '20.19.5'  # 指定你的项目所需的Node版本
 
     - name: Install dependencies
       run: yarn install
